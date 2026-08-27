@@ -1,0 +1,5 @@
+def followers_to_wheatons(followers):
+    return followers / 500000
+
+followers = float(input("Enter number of X followers: "))
+print(followers, "followers =", followers_to_wheatons(followers), "wheatons")
