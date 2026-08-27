@@ -1,0 +1,6 @@
+def km_to_smoots(km):
+    smoot_length_cm = 170
+    return (km * 100000) / smoot_length_cm
+
+km = float(input("Enter distance in kilometers: "))
+print(km, "km =", km_to_smoots(km), "smoots")
