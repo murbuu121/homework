@@ -1,0 +1,6 @@
+def cm_to_mickeys(cm):
+    mickeys_per_mm = 16
+    return cm * 10 * mickeys_per_mm
+
+cm = float(input("Enter distance in centimeters: "))
+print(cm, "cm =", cm_to_mickeys(cm), "mickeys")
