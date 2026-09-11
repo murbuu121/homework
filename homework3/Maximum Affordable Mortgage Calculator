@@ -1,0 +1,17 @@
+# Prompt user for inputs
+d = float(input("Enter affordable monthly payment (d): "))
+r = float(input("Enter annual interest rate as a decimal (e.g., 0.06 for 6%): "))
+k = 12  # monthly compounding
+
+rate_per_period = r / k
+
+# Calculate affordable amount for 15 years
+N_15 = 15
+P0_15 = d * ((1 - (1 + rate_per_period) ** (-N_15 * k)) / rate_per_period)
+
+# Calculate affordable amount for 30 years
+N_30 = 30
+P0_30 = d * ((1 - (1 + rate_per_period) ** (-N_30 * k)) / rate_per_period)
+
+print("Affordable loan amount (15-year mortgage):", P0_15)
+print("Affordable loan amount (30-year mortgage):", P0_30)
