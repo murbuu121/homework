@@ -1,0 +1,12 @@
+# Prompt user for inputs
+d = float(input("Enter monthly deposit amount (d): "))
+r = float(input("Enter annual interest rate as a decimal (e.g., 0.03 for 3%): "))
+k = 12  # monthly compounding
+
+# Formula calculation
+rate_per_period = r / k
+total_periods = 24  # 2 years * 12 months
+
+P_24 = d * (((1 + rate_per_period) ** total_periods - 1) / rate_per_period)
+
+print("Final balance after 2 years:", P_24)
