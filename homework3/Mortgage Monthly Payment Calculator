@@ -1,0 +1,13 @@
+# Prompt user for inputs
+P0 = float(input("Enter amount to borrow (P0): "))
+r = float(input("Enter annual interest rate as a decimal (e.g., 0.02 for 2%): "))
+N = float(input("Enter loan term in years (N): "))
+k = 12  # monthly compounding
+
+rate_per_period = r / k
+total_payments = N * k
+
+# Calculate monthly payment d
+d = P0 / ((1 - (1 + rate_per_period) ** (-total_payments)) / rate_per_period)
+
+print("Monthly mortgage payment:", d)
