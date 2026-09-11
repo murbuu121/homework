@@ -1,0 +1,11 @@
+import math
+
+# Prompt user for inputs
+P0 = float(input("Enter initial investment amount (P0): "))
+t = float(input("Enter length of investment in years (t): "))
+r = float(input("Enter annual interest rate as a decimal (e.g., 0.05 for 5%): "))
+
+# Calculate future value
+P_t = P0 * math.exp(r * t)
+
+print("Final investment balance:", P_t)
