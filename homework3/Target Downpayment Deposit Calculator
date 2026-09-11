@@ -1,0 +1,11 @@
+# Prompt user for inputs
+P_24 = float(input("Enter target downpayment amount: "))
+r = float(input("Enter annual interest rate as a decimal (e.g., 0.03 for 3%): "))
+k = 12  # monthly compounding
+
+rate_per_period = r / k
+total_periods = 24  # 2 years * 12 months
+
+d = P_24 / (((1 + rate_per_period) ** total_periods - 1) / rate_per_period)
+
+print("Required monthly deposit:", d)
