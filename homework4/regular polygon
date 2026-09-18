@@ -1,0 +1,32 @@
+```python
+from graphics import *
+import math
+
+n = int(input("Enter the number of sides: "))
+radius = float(input("Enter the radius: "))
+
+win = GraphWin("Regular Polygon", 500, 500)
+win.setBackground("white")
+
+center_x = 250
+center_y = 250
+
+vertices = []
+angle = 360 / n
+
+for i in range(n):
+    theta = math.radians(i * angle)
+
+    x = center_x + radius * math.cos(theta)
+    y = center_y - radius * math.sin(theta)
+
+    vertices.append(Point(x, y))
+
+polygon = Polygon(vertices)
+polygon.setFill("lightblue")
+polygon.setOutline("black")
+polygon.draw(win)
+
+win.getMouse()
+win.close()
+```
