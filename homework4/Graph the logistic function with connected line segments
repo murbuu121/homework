@@ -1,0 +1,38 @@
+```python
+from graphics import *
+import math
+
+K = 100
+A = 9
+r = 0.1
+
+win = GraphWin("Logistic Function", 600, 500)
+win.setBackground("white")
+
+left = 50
+bottom = 450
+right = 550
+top = 50
+
+# Axes
+Line(Point(left, bottom), Point(right, bottom)).draw(win)
+Line(Point(left, bottom), Point(left, top)).draw(win)
+
+previous_point = None
+
+for x in range(100):
+    y = K / (1 + A * math.exp(-r * x))
+
+    screen_x = left + x * 5
+    screen_y = bottom - y * 4
+
+    current_point = Point(screen_x, screen_y)
+
+    if previous_point is not None:
+        Line(previous_point, current_point).draw(win)
+
+    previous_point = current_point
+
+win.getMouse()
+win.close()
+```
