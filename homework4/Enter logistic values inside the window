@@ -1,0 +1,73 @@
+```python
+from graphics import *
+import math
+
+win = GraphWin("Logistic Function", 700, 550)
+win.setBackground("white")
+
+# Input labels and Entry boxes
+Text(Point(100, 25), "K:").draw(win)
+k_entry = Entry(Point(160, 25), 8)
+k_entry.draw(win)
+
+Text(Point(250, 25), "A:").draw(win)
+a_entry = Entry(Point(310, 25), 8)
+a_entry.draw(win)
+
+Text(Point(400, 25), "r:").draw(win)
+r_entry = Entry(Point(460, 25), 8)
+r_entry.draw(win)
+
+button = Rectangle(Point(540, 10), Point(640, 40))
+button.setFill("lightgray")
+button.draw(win)
+
+button_text = Text(Point(590, 25), "Graph")
+button_text.draw(win)
+
+# Graphing region
+left = 50
+bottom = 500
+right = 650
+top = 70
+
+# Axes
+Line(Point(left, bottom), Point(right, bottom)).draw(win)
+Line(Point(left, bottom), Point(left, top)).draw(win)
+
+while True:
+    click = win.getMouse()
+
+    # Check whether button was clicked
+    if 540 <= click.getX() <= 640 and 10 <= click.getY() <= 40:
+
+        # If button says Exit, close the program
+        if button_text.getText() == "Exit":
+            break
+
+        K = float(k_entry.getText())
+        A = float(a_entry.getText())
+        r = float(r_entry.getText())
+
+        previous_point = None
+
+        # Graph 100 points
+        for x in range(100):
+            y = K / (1 + A * math.exp(-r * x))
+
+            screen_x = left + x * 6
+            screen_y = bottom - (y / K) * 400
+
+            current_point = Point(screen_x, screen_y)
+
+            if previous_point is not None:
+                line = Line(previous_point, current_point)
+                line.setFill("blue")
+                line.draw(win)
+
+            previous_point = current_point
+
+        button_text.setText("Exit")
+
+win.close()
+```
