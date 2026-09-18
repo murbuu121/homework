@@ -1,0 +1,34 @@
+```python
+from graphics import *
+import math
+
+# Logistic function parameters
+K = 100
+A = 9
+r = 0.1
+
+win = GraphWin("Logistic Function", 600, 500)
+win.setBackground("white")
+
+# Graphing region
+left = 50
+bottom = 450
+right = 550
+top = 50
+
+# Axes
+Line(Point(left, bottom), Point(right, bottom)).draw(win)
+Line(Point(left, bottom), Point(left, top)).draw(win)
+
+# Plot 100 points
+for x in range(100):
+    y = K / (1 + A * math.exp(-r * x))
+
+    screen_x = left + x * 5
+    screen_y = bottom - y * 4
+
+    Point(screen_x, screen_y).draw(win)
+
+win.getMouse()
+win.close()
+```
