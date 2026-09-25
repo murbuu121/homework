@@ -1,0 +1,77 @@
+import math
+from graphics import GraphWin, Point, Polygon, Text, Entry, Rectangle
+
+WINDOW_WIDTH = 600
+WINDOW_HEIGHT = 600
+CENTER_X = 300
+CENTER_Y = 300
+RADIUS = 150
+
+def draw_ngon(n, center_x=CENTER_X, center_y=CENTER_Y, radius=RADIUS):
+    """Calculates vertices and returns a Polygon object for an n-gon."""
+    vertices = []
+    angle_step = (2 * math.pi) / n
+    
+    for i in range(n):
+        # Angle offset by -pi/2 so top vertex points straight up
+        angle = i * angle_step - math.pi / 2
+        x = center_x + radius * math.cos(angle)
+        y = center_y + radius * math.sin(angle)
+        vertices.append(Point(x, y))
+        
+    poly = Polygon(vertices)
+    poly.setFill("lightblue")
+    poly.setOutline("black")
+    poly.setWidth(2)
+    return poly
+
+def setup_ui(win):
+    """Draws input controls in the window."""
+    label = Text(Point(200, 40), "Number of sides (n):")
+    label.draw(win)
+    
+    entry = Entry(Point(320, 40), 5)
+    entry.setText("5")
+    entry.draw(win)
+    
+    # Create button outline
+    btn_rect = Rectangle(Point(370, 25), Point(450, 55))
+    btn_rect.setFill("lightgray")
+    btn_rect.draw(win)
+    
+    btn_text = Text(Point(410, 40), "Graph")
+    btn_text.setStyle("bold")
+    btn_text.draw(win)
+    
+    return entry, btn_text, btn_rect
+
+def handle_graph_click(win, entry, btn_text):
+    """Waits for click, reads side count, draws polygon, updates button."""
+    win.getMouse()  # Wait for user click anywhere in the window
+    
+    try:
+        n = int(entry.getText())
+        if n < 3:
+            n = 3
+    except ValueError:
+        n = 3
+        
+    poly = draw_ngon(n)
+    poly.draw(win)
+    
+    # Change button state to Exit
+    btn_text.setText("Exit")
+
+def main():
+    win = GraphWin("N-Gon Plotter", WINDOW_WIDTH, WINDOW_HEIGHT)
+    entry, btn_text, btn_rect = setup_ui(win)
+    
+    # Wait for click and draw polygon
+    handle_graph_click(win, entry, btn_text)
+    
+    # Wait for next click to close
+    win.getMouse()
+    win.close()
+
+if __name__ == "__main__":
+    main()
