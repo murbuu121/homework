@@ -1,0 +1,17 @@
+def chaos(k, x, n):
+    """Generates and prints n iterations of the logistic map: k * x * (1 - x)."""
+    for i in range(n):
+        x = k * x * (1 - x)
+        print(f"Iteration {i + 1}: {x:.6f}")
+
+def main():
+    print("--- Logistic Chaos Generator ---")
+    k = float(input("Enter growth rate parameter (k, e.g., 3.5): "))
+    x = float(input("Enter initial value (x, between 0 and 1): "))
+    n = int(input("Enter number of iterations (n): "))
+    
+    print("\nGenerated Values:")
+    chaos(k, x, n)
+
+if __name__ == "__main__":
+    main()
