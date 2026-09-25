@@ -1,0 +1,27 @@
+def calcPmt(P0, r, k, N):
+    """
+    Calculates monthly payment.
+    P0: Amount financed
+    r: Annual interest rate (as a decimal, e.g., 0.05 for 5%)
+    k: Number of compounding periods per year
+    N: Total number of years
+    """
+    i = r / k  # Interest rate per compounding period
+    n = N * k  # Total number of payments
+    
+    d = (P0 * i) / (1 - (1 + i)**(-n))
+    return d
+
+def main():
+    print("--- Loan Payment Calculator ---")
+    P0 = float(input("Enter loan amount ($): "))
+    r_percent = float(input("Enter annual interest rate (%): "))
+    r = r_percent / 100.0
+    k = int(input("Enter number of payments per year (e.g., 12): "))
+    N = float(input("Enter term of loan in years: "))
+    
+    payment = calcPmt(P0, r, k, N)
+    print(f"\nMonthly Payment: ${payment:.2f}")
+
+if __name__ == "__main__":
+    main()
