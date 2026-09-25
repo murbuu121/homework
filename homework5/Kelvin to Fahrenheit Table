@@ -1,0 +1,13 @@
+def kToF(k):
+    """Converts Kelvin to Fahrenheit."""
+    return (k - 273.15) * 9 / 5 + 32
+
+def main():
+    print(f"{'Kelvin (K)':>12} | {'Fahrenheit (°F)':>15}")
+    print("-" * 30)
+    for k in range(0, 301, 20):
+        f = kToF(k)
+        print(f"{k:12.1f} | {f:15.2f}")
+
+if __name__ == "__main__":
+    main()
