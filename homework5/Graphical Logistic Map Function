@@ -1,0 +1,58 @@
+from graphics import GraphWin, Point, Line, Text
+
+def calc_logistic(k, x):
+    """Calculates a single step of the logistic function."""
+    return k * x * (1 - x)
+
+def graph_logistic(k, x0, n):
+    """Draws the plot of the logistic function over n iterations."""
+    win = GraphWin(f"Logistic Map (k={k}, x0={x0})", 800, 500)
+    win.setBackground("white")
+    
+    # Margins and axes bounds
+    margin_x, margin_y = 60, 50
+    width, height = 700, 400
+    
+    # Draw X and Y axes
+    Line(Point(margin_x, height + margin_y), Point(margin_x + width, height + margin_y)).draw(win)
+    Line(Point(margin_x, margin_y), Point(margin_x, height + margin_y)).draw(win)
+    
+    Text(Point(margin_x + width / 2, height + margin_y + 25), "Iteration (n)").draw(win)
+    Text(Point(margin_x - 30, height / 2 + margin_y), "x").draw(win)
+    
+    x = x0
+    prev_point = None
+    
+    for i in range(n + 1):
+        # Map values to pixel coordinates
+        px = margin_x + (i / n) * width
+        py = (height + margin_y) - (x * height)
+        curr_point = Point(px, py)
+        
+        # Plot point
+        dot = Point(px, py)
+        dot.setFill("blue")
+        dot.draw(win)
+        
+        # Connect with lines
+        if prev_point:
+            line = Line(prev_point, curr_point)
+            line.setOutline("blue")
+            line.draw(win)
+            
+        prev_point = curr_point
+        x = calc_logistic(k, x)
+        
+    Text(Point(400, 25), "Click anywhere to exit").draw(win)
+    win.getMouse()
+    win.close()
+
+def main():
+    k = float(input("Enter k parameter (0 to 4): "))
+    x0 = float(input("Enter initial x (0 to 1): "))
+    n = int(input("Enter number of iterations: "))
+    
+    graph_logistic(k, x0, n)
+
+if __name__ == "__main__":
+    main()
