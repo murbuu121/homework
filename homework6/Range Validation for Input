@@ -1,0 +1,26 @@
+import sys
+
+
+def perform_calculations(x):
+    # Place calculations from Chapter 5, Problem 1 here
+    result = x**2 + 2 * x + 1
+    print(f"Calculation result for x = {x}: {result}")
+
+
+def main():
+    try:
+        x = float(input("Enter a value for x (between 0 and 1): "))
+    except ValueError:
+        print("Error: Invalid input. Please enter a numerical value.")
+        sys.exit(1)
+
+    # Check if x is within the required range [0, 1]
+    if x < 0 or x > 1:
+        print("Error: The value of x must be between 0 and 1.")
+        sys.exit(1)
+
+    perform_calculations(x)
+
+
+if __name__ == "__main__":
+    main()
