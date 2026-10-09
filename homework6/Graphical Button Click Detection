@@ -1,0 +1,52 @@
+from graphics import GraphWin, Point, Rectangle, Text
+
+
+def is_clicked(click_point, button):
+    """Returns True if click_point falls inside the button rectangle."""
+    p1 = button.getP1()  # Top-left corner
+    p2 = button.getP2()  # Bottom-right corner
+
+    # Check x-coordinate and y-coordinate bounds
+    x_inside = min(p1.getX(), p2.getX()) <= click_point.getX() <= max(
+        p1.getX(), p2.getX()
+    )
+    y_inside = min(p1.getY(), p2.getY()) <= click_point.getY() <= max(
+        p1.getY(), p2.getY()
+    )
+
+    return x_inside and y_inside
+
+
+def main():
+    win = GraphWin("Button Click Test", 400, 400)
+
+    # Draw the button
+    btn_p1 = Point(100, 150)
+    btn_p2 = Point(300, 250)
+    button = Rectangle(btn_p1, btn_p2)
+    button.setFill("lightgray")
+    button.draw(win)
+
+    btn_label = Text(Point(200, 200), "Click Me!")
+    btn_label.draw(win)
+
+    # Status message area
+    status_text = Text(Point(200, 320), "Click anywhere inside the window.")
+    status_text.draw(win)
+
+    # Loop 10 times to capture clicks
+    for i in range(10):
+        click_pt = win.getMouse()
+        if is_clicked(click_pt, button):
+            status_text.setText(f"Click {i+1}/10: Button WAS clicked!")
+        else:
+            status_text.setText(f"Click {i+1}/10: Button WAS NOT clicked.")
+
+    # Finish
+    status_text.setText("Done! Click once more to close.")
+    win.getMouse()
+    win.close()
+
+
+if __name__ == "__main__":
+    main()
