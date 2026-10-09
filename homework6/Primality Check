@@ -1,0 +1,34 @@
+def is_composite(n):
+    """
+    Returns True if a factor is found (meaning n is NOT prime),
+    otherwise returns False (meaning n IS prime).
+    """
+    found = False  # Track if a factor was found
+
+    if n <= 1:
+        return True  # 1 and negative numbers are not prime
+
+    # Inefficient check: Loop through all integers from 2 up to n-1
+    for i in range(2, n):
+        if n % i == 0:
+            found = True  # Factor located!
+
+    return found
+
+
+def main():
+    n = int(input("Enter an integer to check for primeness: "))
+
+    # If 'found' flag was set to True, a factor was found (not prime)
+    factor_found = is_composite(n)
+
+    if n <= 1:
+        print(f"{n} is not a prime number.")
+    elif factor_found:
+        print(f"{n} is NOT a prime number.")
+    else:
+        print(f"{n} IS a prime number!")
+
+
+if __name__ == "__main__":
+    main()
