@@ -1,0 +1,32 @@
+def classify_triangle(a, b, c):
+    # Check for equilateral triangle
+    if a == b and b == c:
+        return "Equilateral (all sides are equal)"
+    # Check for isosceles triangle
+    elif a == b or b == c or a == c:
+        return "Isosceles (exactly two sides are equal)"
+    # Otherwise, it must be scalene
+    else:
+        return "Scalene (all sides are different)"
+
+
+def main():
+    print("Help Telly Monster identify triangles!")
+    side1 = float(input("Enter the length of side 1: "))
+    side2 = float(input("Enter the length of side 2: "))
+    side3 = float(input("Enter the length of side 3: "))
+
+    # Basic triangle inequality check
+    if (
+        side1 + side2 <= side3
+        or side1 + side3 <= side2
+        or side2 + side3 <= side1
+    ):
+        print("Those side lengths do not form a valid triangle!")
+    else:
+        result = classify_triangle(side1, side2, side3)
+        print(f"That's a(n) {result} triangle!")
+
+
+if __name__ == "__main__":
+    main()
