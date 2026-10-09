@@ -1,0 +1,31 @@
+def classify_age(age):
+    if age < 0:
+        return "Invalid age entered."
+
+    # Determine classification based on age brackets
+    if age <= 12:
+        category = "a Child"
+    elif age <= 19:
+        category = "a Teenager"
+    elif age <= 65:
+        category = "an Adult"
+    else:
+        category = "a Senior"
+
+    # Special check for 100+
+    if age >= 100:
+        category += "\nCongratulations on appearing on the Smucker's jar!"
+
+    return category
+
+
+def main():
+    try:
+        age = int(input("Enter your age: "))
+        print(classify_age(age))
+    except ValueError:
+        print("Please enter a valid whole number for age.")
+
+
+if __name__ == "__main__":
+    main()
