@@ -1,0 +1,15 @@
+def simpleDiv(dividend, divisor):
+    count = 0
+    while dividend >= divisor:
+        dividend -= divisor
+        count += 1
+    return count
+
+def main():
+    num1 = int(input("Enter dividend: "))
+    num2 = int(input("Enter divisor: "))
+    result = simpleDiv(num1, num2)
+    print(f"Result of integer division: {result}")
+
+if __name__ == "__main__":
+    main()
