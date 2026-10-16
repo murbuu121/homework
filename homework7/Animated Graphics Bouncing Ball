@@ -1,0 +1,58 @@
+from graphics import *
+import time
+
+def main():
+    # 1. Get the initial drop height from the user
+    initial_height = float(input("Enter initial drop height in meters: "))
+    
+    # 2. Set up the graphics window
+    win = GraphWin("Bouncing Ball Simulation", 400, 600)
+    
+    # Map coordinates: x goes from 0 to 10, y goes from 0 (ground) to initial_height
+    win.setCoords(0, 0, 10, initial_height)
+    
+    # 3. Create the ball (positioned at x = 5, y = initial_height)
+    # Radius is dynamically sized to look proportional to the height
+    radius = initial_height * 0.02
+    ball = Circle(Point(5, initial_height), radius)
+    ball.setFill("dodgerblue")
+    ball.setOutline("navy")
+    ball.draw(win)
+    
+    current_height = initial_height
+    steps = 25  # Number of animation frames per fall/rise
+    
+    # 4. Animation loop (continues until bounce height is less than 1 mm / 0.001m)
+    while current_height >= 0.001:
+        next_height = current_height * 0.60
+        
+        # --- Fall: Move down from current_height to 0 (ground) ---
+        dy_down = current_height / steps
+        for _ in range(steps):
+            ball.move(0, -dy_down)
+            time.sleep(0.01)  # Slows down the action
+            
+        # Stop if the next bounce won't even reach 1mm
+        if next_height < 0.001:
+            break
+            
+        # --- Rise: Move up from 0 to next_height ---
+        dy_up = next_height / steps
+        for _ in range(steps):
+            ball.move(0, dy_up)
+            time.sleep(0.01)
+            
+        # Update current height for the next iteration
+        current_height = next_height
+        
+    # 5. Finished state: display message and wait for click to exit
+    msg = Text(Point(5, initial_height * 0.5), "Simulation Complete!\nClick anywhere to close.")
+    msg.setSize(12)
+    msg.setFill("black")
+    msg.draw(win)
+    
+    win.getMouse()
+    win.close()
+
+if __name__ == "__main__":
+    main()
