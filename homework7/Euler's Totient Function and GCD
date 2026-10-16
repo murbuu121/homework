@@ -1,0 +1,20 @@
+def gcd(a, b):
+    while b != 0:
+        a, b = b, a % b
+    return a
+
+def phi(n):
+    coprimes = []
+    for k in range(1, n):
+        if gcd(n, k) == 1:
+            coprimes.append(k)
+    return coprimes
+
+def main():
+    n = int(input("Enter an integer n: "))
+    result_list = phi(n)
+    print(f"Integers up to {n} that are relatively prime to it: {result_list}")
+    print(f"Phi({n}) = {len(result_list)}")
+
+if __name__ == "__main__":
+    main()
