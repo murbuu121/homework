@@ -1,0 +1,25 @@
+def create_keyword_alphabet(keyword):
+    keyword = keyword.upper()
+    # Remove duplicate letters while preserving order
+    seen = set()
+    unique_keyword = [x for x in keyword if not (x in seen or seen.add(x))]
+    
+    alphabet = [chr(i) for i in range(ord('A'), ord('Z') + 1)]
+    remaining = [ch for ch in alphabet if ch not in unique_keyword]
+    
+    cipher_alphabet = unique_keyword + remaining
+    return "".join(cipher_alphabet)
+
+def encode_keyword(message, keyword):
+    plain = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    cipher = create_keyword_alphabet(keyword)
+    
+    trans_table = str.maketrans(plain + plain.lower(), cipher + cipher.lower())
+    return message.translate(trans_table)
+
+def decode_keyword(message, keyword):
+    plain = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    cipher = create_keyword_alphabet(keyword)
+    
+    trans_table = str.maketrans(cipher + cipher.lower(), plain + plain.lower())
+    return message.translate(trans_table)
