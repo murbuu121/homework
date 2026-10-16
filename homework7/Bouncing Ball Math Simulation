@@ -1,0 +1,13 @@
+def simulate_bounce():
+    initial_height = float(input("Enter initial drop height in meters: "))
+    height = initial_height
+    bounces = 0
+    
+    # 1 mm = 0.001 meters
+    while height >= 0.001:
+        height *= 0.60
+        bounces += 1
+        
+    print(f"Total number of bounces: {bounces}")
+
+simulate_bounce()
