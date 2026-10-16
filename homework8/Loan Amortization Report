@@ -1,0 +1,26 @@
+def calculate_amortization():
+    P0 = float(input("Enter principal amount to finance ($): "))
+    r = float(input("Enter annual interest rate (e.g., 0.05 for 5%): "))
+    k = int(input("Enter number of compounding/payment periods per year: "))
+    N = int(input("Enter number of years: "))
+    
+    total_periods = N * k
+    periodic_rate = r / k
+    
+    # Standard loan payment formula
+    payment = (P0 * periodic_rate) / (1 - (1 + periodic_rate) ** -total_periods)
+    
+    balance = P0
+    print(f"\n{'Pmt #':<8}{'Payment':<12}{'Interest':<12}{'Principal':<12}{'Balance':<12}")
+    print("-" * 56)
+    
+    for i in range(1, total_periods + 1):
+        interest = balance * periodic_rate
+        principal_part = payment - interest
+        balance -= principal_part
+        if balance < 0:
+            balance = 0.0
+            
+        print(f"{i:<8}{payment:<12.2f}{interest:<12.2f}{principal_part:<12.2f}{balance:<12.2f}")
+
+calculate_amortization()
