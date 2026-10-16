@@ -1,0 +1,18 @@
+def clickedInButton(point, rect):
+    p1 = rect.getP1()
+    p2 = rect.getP2()
+    
+    xmin = min(p1.getX(), p2.getX())
+    xmax = max(p1.getX(), p2.getX())
+    ymin = min(p1.getY(), p2.getY())
+    ymax = max(p1.getY(), p2.getY())
+    
+    x = point.getX()
+    y = point.getY()
+    
+    return xmin <= x <= xmax and ymin <= y <= ymax
+
+# Inside your main program loop:
+# clicked_point = win.getMouse()
+# while not clickedInButton(clicked_point, myButton):
+#     clicked_point = win.getMouse()
