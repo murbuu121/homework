@@ -1,0 +1,38 @@
+# 5x5 Checkerboard representation as a list of strings
+board = [
+    "ABCDE",
+    "FGHIJ",
+    "KLMNO",
+    "PQRST",
+    "UVWXY" # Note: W/X/Y/Z grouped or simplified per layout
+]
+
+def find_coords(board, letter):
+    letter = letter.upper()
+    if letter == 'Z':  # Often mapped to Y
+        letter = 'Y'
+    for r, row in enumerate(board):
+        if letter in row:
+            c = row.index(letter)
+            return str(r) + str(c)
+    return ""
+
+def encrypt_polybius(message, board):
+    ciphertext = []
+    for char in message.upper():
+        if char.isalpha():
+            ciphertext.append(find_coords(board, char))
+        elif char == ' ':
+            ciphertext.append(" ")
+    return " ".join(ciphertext)
+
+def decrypt_polybius(ciphertext, board):
+    plaintext = []
+    tokens = ciphertext.split()
+    for token in tokens:
+        if len(token) == 2 and token.isdigit():
+            r, c = int(token[0]), int(token[1])
+            plaintext.append(board[r][c])
+        else:
+            plaintext.append(token)
+    return "".join(plaintext)
