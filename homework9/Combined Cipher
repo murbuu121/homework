@@ -1,0 +1,26 @@
+def build_grid(message, rows, cols):
+    padded = message.ljust(rows * cols, 'X')
+    return [list(padded[i:i+cols]) for i in range(0, len(padded), cols)]
+
+def apply_keyword_columns(grid, keyword):
+    rows = len(grid)
+    cols = len(grid[0])
+    indexed_kw = sorted(list(enumerate(keyword)), key=lambda x: x[1])
+    col_order = [item[0] for item in indexed_kw]
+    
+    reordered_grid = []
+    for r in range(rows):
+        new_row = [grid[r][c] for c in col_order]
+        reordered_grid.append(new_row)
+    return reordered_grid
+
+def apply_path(grid, path):
+    return "".join(grid[r][c] for (r, c) in path)
+
+def combined_encipher(message, keyword, rows, cols, path):
+    grid = build_grid(message, rows, cols)
+    grid = apply_keyword_columns(grid, keyword)
+    ciphertext = apply_path(grid, path)
+    return ciphertext
+
+# Example pipeline structure ready for invocation
