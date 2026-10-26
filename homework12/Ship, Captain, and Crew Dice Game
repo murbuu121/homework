@@ -1,0 +1,54 @@
+import random
+
+class Die:
+    def __init__(self):
+        self.value = 1
+
+    def roll(self):
+        self.value = random.randint(1, 6)
+        return self.value
+
+
+class DiceCup:
+    """Collection of 5 dice with locking mechanism."""
+    def __init__(self):
+        self.dice = [Die() for _ in range(5)]
+        self.has_ship = False
+        self.has_captain = False
+        self.has_crew = False
+
+    def roll(self):
+        # Roll only dice that haven't been locked
+        for i, die in enumerate(self.dice):
+            if i == 0 and not self.has_ship:
+                val = die.roll()
+                if val == 6:
+                    self.has_ship = True
+            elif i == 1 and not self.has_captain and self.has_ship:
+                val = die.roll()
+                if val == 5:
+                    self.has_captain = True
+            elif i == 2 and not self.has_crew and self.has_captain:
+                val = die.roll()
+                if val == 4:
+                    self.has_crew = True
+            elif i >= 3 and self.has_ship and self.has_captain and self.has_crew:
+                die.roll()
+
+    def get_cargo_sum(self):
+        if self.has_ship and self.has_captain and self.has_crew:
+            return sum(d.value for d in self.dice[3:])
+        return 0
+
+
+class SCCPlayer:
+    def __init__(self, name):
+        self.name = name
+        self.score = 0
+
+    def take_turn(self):
+        cup = DiceCup()
+        for _ in range(3):
+            cup.roll()
+        self.score = cup.get_cargo_sum()
+        return self.score
