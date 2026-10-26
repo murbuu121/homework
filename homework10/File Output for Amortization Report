@@ -1,0 +1,29 @@
+def main():
+    # Prompt the user for the output file name
+    filename = input("Enter the name of the file to save the amortization report: ")
+    
+    # Example input values for an amortization schedule
+    principal = float(input("Enter loan amount: "))
+    rate = float(input("Enter annual interest rate (as a decimal, e.g., 0.05): ")) / 12
+    payments = int(input("Enter number of monthly payments: "))
+
+    # Open the file for writing
+    with open(filename, "w", encoding="utf-8") as file_out:
+        # Write headers to file
+        file_out.write(f"{'Month':<6}{'Starting Balance':<18}{'Interest':<12}{'Principal':<12}{'Ending Balance':<18}\n")
+        file_out.write("-" * 66 + "\n")
+        
+        balance = principal
+        for month in range(1, payments + 1):
+            interest = balance * rate
+            principal_paid = (principal * rate) / (1 - (1 + rate) ** -payments) - interest # Example formula
+            ending_balance = balance - principal_paid
+            
+            # Write each row to the file
+            file_out.write(f"{month:<6}{balance:<18.2f}{interest:<12.2f}{principal_paid:<12.2f}{ending_balance:<18.2f}\n")
+            balance = ending_balance
+
+    print(f"Amortization report successfully written to '{filename}'.")
+
+if __name__ == "__main__":
+    main()
