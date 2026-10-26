@@ -1,0 +1,29 @@
+class TextInterface:
+    def show_turn(self, player, results):
+        print(f"{player.name} (Chips: {player.chips}) rolled {results}")
+
+    def show_winner(self, winner):
+        print(f"\nGame Over! Winner: {winner.name} with {winner.chips} chips!")
+
+
+# For a graphical interface using graphics.py:
+from graphics import GraphWin, Text, Point, Rectangle
+
+class GraphicalInterface:
+    def __init__(self):
+        self.win = GraphWin("LCR Game Simulation", 600, 400)
+        self.win.setCoords(0, 0, 10, 10)
+        self.msg = Text(Point(5, 5), "Starting LCR Game...")
+        self.msg.draw(self.win)
+
+    def show_turn(self, player, results):
+        text = f"{player.name} rolled {results}\nChips left: {player.chips}"
+        self.msg.setText(text)
+        # Add a short pause for visualization
+        import time
+        time.sleep(0.5)
+
+    def show_winner(self, winner):
+        self.msg.setText(f"Winner: {winner.name}!")
+        self.win.getMouse()
+        self.win.close()
