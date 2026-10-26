@@ -1,0 +1,26 @@
+class SCCTextInterface:
+    def display_turn(self, player, score):
+        print(f"Player {player.name} scored {score} cargo points.")
+
+    def display_winner(self, winner):
+        print(f"\nThe winner is {winner.name} with a score of {winner.score}!")
+
+
+from graphics import GraphWin, Text, Point
+
+class SCCGraphicalInterface:
+    def __init__(self):
+        self.win = GraphWin("Ship, Captain & Crew", 500, 300)
+        self.win.setCoords(0, 0, 10, 10)
+        self.display = Text(Point(5, 5), "Ready to play SCC...")
+        self.display.draw(self.win)
+
+    def display_turn(self, player, score):
+        self.display.setText(f"{player.name} rolled a cargo score of {score}")
+        import time
+        time.sleep(0.8)
+
+    def display_winner(self, winner):
+        self.display.setText(f"Winner: {winner.name} ({winner.score} pts)")
+        self.win.getMouse()
+        self.win.close()
