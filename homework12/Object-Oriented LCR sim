@@ -1,0 +1,85 @@
+import random
+
+class Die:
+    """Represents a specialized 6-sided LCR die."""
+    def __init__(self):
+        # 3 sides with dots (keep/pass nothing), 1 'L', 1 'R', 1 'C'
+        self.sides = ['.', '.', '.', 'L', 'R', 'C']
+
+    def roll(self):
+        return random.choice(self.sides)
+
+
+class Pot:
+    """Represents the center pot collecting chips."""
+    def __init__(self):
+        self.chips = 0
+
+    def add(self, amount):
+        self.chips += amount
+
+    def take_all(self):
+        total = self.chips
+        self.chips = 0
+        return total
+
+
+class Player:
+    """Represents a player in the game."""
+    def __init__(self, name, chips=3):
+        self.name = name
+        self.chips = chips
+
+    def has_chips(self):
+        return self.chips > 0
+
+    def add_chips(self, amount):
+        self.chips += amount
+
+    def remove_chips(self, amount):
+        self.chips = max(0, self.chips - amount)
+
+    def roll_count(self):
+        return min(3, self.chips)
+
+
+class LCRGame:
+    """Game control engine for LCR."""
+    def __init__(self, player_names):
+        self.players = [Player(name) for name in player_names]
+        self.pot = Pot()
+        self.die = Die()
+
+    def play_round(self, interface):
+        for i, player in enumerate(self.players):
+            if not player.has_chips():
+                continue
+            
+            rolls = player.roll_count()
+            results = [self.die.roll() for _ in range(rolls)]
+            
+            interface.show_turn(player, results)
+
+            for result in results:
+                if result == 'L':
+                    player.remove_chips(1)
+                    left_player = self.players[(i - 1) % len(self.players)]
+                    left_player.add_chips(1)
+                elif result == 'R':
+                    player.remove_chips(1)
+                    right_player = self.players[(i + 1) % len(self.players)]
+                    right_player.add_chips(1)
+                elif result == 'C':
+                    player.remove_chips(1)
+                    self.pot.add(1)
+
+    def is_game_over(self):
+        active_players = [p for p in self.players if p.has_chips()]
+        return len(active_players) <= 1
+
+    def get_winner(self):
+        for player in self.players:
+            if player.has_chips():
+                player.add_chips(self.pot.take_all())
+                return player
+        return None
