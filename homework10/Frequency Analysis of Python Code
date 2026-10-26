@@ -1,0 +1,37 @@
+import os
+import glob
+
+def python_code_frequency():
+    directory = input("Enter directory path containing .py files: ")
+    
+    # Find all .py files recursively
+    py_files = glob.glob(os.path.join(directory, "**", "*.py"), recursive=True)
+    
+    combined_text = ""
+    for filepath in py_files:
+        try:
+            with open(filepath, "r", encoding="utf-8") as f:
+                combined_text += f.read().lower()
+        except Exception as e:
+            print(f"Skipping {filepath} due to error: {e}")
+
+    # Count letters a-z
+    counts = {chr(i): 0 for i in range(ord('a'), ord('z') + 1)}
+    total_letters = 0
+
+    for char in combined_text:
+        if char in counts:
+            counts[char] += 1
+            total_letters += 1
+
+    if total_letters == 0:
+        print("No Python code files found or no letters to analyze.")
+        return
+
+    print("\n--- Python Code Letter Frequency Graph ---")
+    for char, count in counts.items():
+        bar = '*' * int((count / total_letters) * 100)
+        print(f"{char.upper()}: {bar} ({count})")
+
+if __name__ == "__main__":
+    python_code_frequency()
