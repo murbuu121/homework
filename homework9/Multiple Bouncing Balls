@@ -1,0 +1,48 @@
+from graphics import *
+import random
+import time
+
+def main():
+    win = GraphWin("Three Bouncing Balls", 600, 600)
+    win.setCoords(0, 0, 600, 600)
+    
+    # List to store dictionaries of ball properties and graphics objects
+    balls = []
+    colors = ["red", "green", "blue"]
+    
+    for i in range(3):
+        radius = 20
+        x = random.randint(50, 550)
+        y = random.randint(50, 550)
+        dx = random.choice([-5, 5])
+        dy = random.choice([-5, 5])
+        
+        circle = Circle(Point(x, y), radius)
+        circle.setFill(colors[i])
+        circle.draw(win)
+        
+        balls.append({"shape": circle, "dx": dx, "dy": dy, "radius": radius})
+        
+    # Animation loop
+    while not win.checkMouse():
+        for ball in balls:
+            circle = ball["shape"]
+            dx = ball["dx"]
+            dy = ball["dy"]
+            r = ball["radius"]
+            
+            circle.move(dx, dy)
+            center = circle.getCenter()
+            
+            # Bounce off walls
+            if center.getX() - r <= 0 or center.getX() + r >= 600:
+                ball["dx"] = -dx
+            if center.getY() - r <= 0 or center.getY() + r >= 600:
+                ball["dy"] = -dy
+                
+        time.sleep(0.02)
+        
+    win.close()
+
+if __name__ == "__main__":
+    main()
