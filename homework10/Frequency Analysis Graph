@@ -1,0 +1,33 @@
+def frequency_analysis():
+    filename = input("Enter text file name to analyze: ")
+    
+    with open(filename, "r", encoding="utf-8") as f:
+        text = f.read().lower()
+
+    # Initialize counts for letters a-z
+    counts = {chr(i): 0 for i in range(ord('a'), ord('z') + 1)}
+    total_letters = 0
+
+    for char in text:
+        if char in counts:
+            counts[char] += 1
+            total_letters += 1
+
+    if total_letters == 0:
+        print("No alphabetic characters found in the file.")
+        return
+
+    # Find the maximum ratio for scaling
+    ratios = {char: count / total_letters for char, count in counts.items()}
+    max_ratio = max(ratios.values()) if ratios else 1
+
+    print("\n--- Letter Frequency Analysis Graph ---")
+    for char, count in counts.items():
+        ratio = ratios[char]
+        # Scale the graph so the highest bar spans up to 50 columns
+        bar_length = int((ratio / max_ratio) * 50) if max_ratio > 0 else 0
+        bar = '*' * bar_length
+        print(f"{char.upper()}: {bar} ({count})")
+
+if __name__ == "__main__":
+    frequency_analysis()
