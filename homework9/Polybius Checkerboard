@@ -1,0 +1,20 @@
+# Polybius checkerboard represented as a list of lists
+checkerboard = [
+    ['A', 'B', 'C', 'D', 'E'],
+    ['F', 'G', 'H', 'I', 'K'], # Note: I/J often share a spot
+    ['L', 'M', 'N', 'O', 'P'],
+    ['Q', 'R', 'S', 'T', 'U'],
+    ['V', 'W', 'X', 'Y', 'Z']
+]
+
+def find_letter(letter, board):
+    """Returns a tuple (row, col) for the given letter."""
+    for r in range(len(board)):
+        for c in range(len(board[r])):
+            if board[r][c] == letter.upper():
+                return (r, c)
+    return None
+
+# Example usage:
+pos = find_letter('K', checkerboard)
+print(f"Position of K (row, col): {pos}")
