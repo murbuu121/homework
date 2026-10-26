@@ -1,0 +1,32 @@
+def create_grid(message, rows, cols):
+    """Pads message to fit rows*cols and creates a list of lists."""
+    padded = message.ljust(rows * cols, 'X')
+    grid = []
+    index = 0
+    for r in range(rows):
+        row = []
+        for c in range(cols):
+            row.append(padded[index])
+            index += 1
+        grid.append(row)
+    return grid
+
+def keyword_encipher(message, keyword, rows, cols):
+    grid = create_grid(message, rows, cols)
+    
+    # Determine column order based on alphabetical sorting of keyword characters
+    # e.g., 'PYTHON' -> sorted chars with original indices
+    indexed_keyword = sorted(list(enumerate(keyword)), key=lambda x: x[1])
+    col_order = [item[0] for item in indexed_keyword]
+    
+    ciphertext = ""
+    for c in col_order:
+        for r in range(rows):
+            ciphertext += grid[r][c]
+            
+    return ciphertext, grid
+
+# Example usage:
+msg = "PROGRAMMINGWITHPYTHONISCOOL"
+cipher, grid = keyword_encipher(msg, "PYTHON", 5, 6)
+print("Ciphertext:", cipher)
