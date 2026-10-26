@@ -1,0 +1,71 @@
+from graphics import GraphWin, Circle, Point, color_rgb
+import time
+
+class Ball:
+    """Encapsulates physics and graphical representation of a bouncing ball."""
+    def __init__(self, win, x, y, vx, vy, radius, color):
+        self.x = x
+        self.y = y
+        self.vx = vx
+        self.vy = vy
+        self.radius = radius
+        self.shape = Circle(Point(x, y), radius)
+        self.shape.setFill(color)
+        self.shape.draw(win)
+
+    def update(self, dt, gravity, x_max, y_max):
+        # Apply gravity acceleration to velocity y
+        self.vy -= gravity * dt
+        
+        # Update position
+        self.x += self.vx * dt
+        self.y += self.vy * dt
+
+        # Wall collisions with energy loss (bounciness)
+        bounciness = 0.8
+        if self.x - self.radius <= 0:
+            self.x = self.radius
+            self.vx = -self.vx * bounciness
+        elif self.x + self.radius >= x_max:
+            self.x = x_max - self.radius
+            self.vx = -self.vx * bounciness
+
+        if self.y - self.radius <= 0:
+            self.y = self.radius
+            self.vy = -self.vy * bounciness
+        elif self.y + self.radius >= y_max:
+            self.y = y_max - self.radius
+            self.vy = -self.vy * bounciness
+
+        # Move graphical circle
+        dx = self.x - self.shape.getCenter().getX()
+        dy = self.y - self.shape.getCenter().getY()
+        self.shape.move(dx, dy)
+
+
+def run_simulation():
+    width, height = 800, 600
+    win = GraphWin("3-Ball Physics Simulation", width, height)
+    # Set aspect ratio coordinates so balls stay perfectly round
+    win.setCoords(0, 0, 20.0, 15.0)
+
+    gravity = 9.8
+    dt = 0.02
+
+    # Initialize three balls with different positions, velocities, and colors
+    balls = [
+        Ball(win, x=5.0, y=10.0, vx=4.0, vy=2.0, radius=0.8, color=color_rgb(255, 80, 80)),
+        Ball(win, x=10.0, y=12.0, vx=-3.0, vy=1.0, radius=0.8, color=color_rgb(80, 255, 80)),
+        Ball(win, x=15.0, y=8.0, vx=2.5, vy=-2.0, radius=0.8, color=color_rgb(80, 80, 255))
+    ]
+
+    # Main simulation loop (run until mouse click)
+    while win.checkMouse() is None:
+        for ball in balls:
+            ball.update(dt, gravity, x_max=20.0, y_max=15.0)
+        time.sleep(dt)
+
+    win.close()
+
+# Uncomment to run simulation
+# run_simulation()
