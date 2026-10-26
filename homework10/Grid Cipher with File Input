@@ -1,0 +1,28 @@
+def load_grid_cipher_data(filename):
+    """Reads grid size and path tuples from a file."""
+    with open(filename, "r", encoding="utf-8") as f:
+        # Read lines and evaluate them safely or parse them
+        grid_size = eval(f.readline().strip())
+        path = eval(f.readline().strip())
+    return grid_size, path
+
+def encipher(message, path):
+    """Enciphers a message using the coordinate path."""
+    cipher_list = [''] * len(path)
+    for i, pos in enumerate(path):
+        if i < len(message):
+            cipher_list[pos] = message[i]
+    return "".join(cipher_list)
+
+def decipher(ciphertext, path):
+    """Deciphers a message using the coordinate path."""
+    message_list = [''] * len(path)
+    for i, pos in enumerate(path):
+        if pos < len(ciphertext):
+            message_list[i] = ciphertext[pos]
+    return "".join(message_list).strip()
+
+# Example usage:
+# Assume file 'cipher_config.txt' contains:
+# (3, 3)
+# [0, 4, 8, 1, 3, 2, 5, 7, 6]
