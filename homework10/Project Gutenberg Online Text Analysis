@@ -1,0 +1,29 @@
+import urllib.request
+
+def project_gutenberg_analysis():
+    url = input("Enter Project Gutenberg URL (e.g., https://gutenberg.org/cache/epub/100/pg100.txt): ")
+    
+    print("Downloading text from the Internet...")
+    with urllib.request.urlopen(url) as response:
+        text = response.read().decode('utf-8')
+
+    # Initialize 256 buckets for lower 256 ordinal values
+    buckets = [0] * 256
+
+    for char in text:
+        code = ord(char)
+        if code < 256:
+            buckets[code] += 1
+
+    # Prompt user for output file name
+    output_filename = input("Enter output file name to save character counts: ")
+    with open(output_filename, "w", encoding="utf-8") as out_f:
+        for code, count in enumerate(buckets):
+            if count > 0:
+                char = chr(code)
+                out_f.write(f"{char},{count}\n")
+
+    print(f"Character count data successfully saved to '{output_filename}'.")
+
+if __name__ == "__main__":
+    project_gutenberg_analysis()
